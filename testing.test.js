@@ -2,6 +2,7 @@ const { capitalize } = require('./capitalize.js');
 const { reverseString } = require('./reverseString.js');
 const { calculator } = require('./calculator.js');
 const { caesarCipher } = require('./caesarCipher.js');
+const { analyzeArray } = require('./analyzeArray.js');
 
 // Test for the capitalize function
 describe('capitalize', () => {
@@ -132,5 +133,48 @@ describe('caesarCipher', () => {
 
   test('should correctly wrap around negative shift for uppercase letters', () => {
     expect(caesarCipher('ABC', -3)).toBe('XYZ');
+  });
+});
+
+//Tests for the analyzeArray function
+describe('analyzeArray', () => {
+  test('should return correct average, min, max, and length for a typical array', () => {
+    const result = analyzeArray([1, 2, 3, 4, 5]);
+    expect(result.average).toBe(3);
+    expect(result.min).toBe(1);
+    expect(result.max).toBe(5);
+    expect(result.length).toBe(5);
+  });
+
+  test('should handle an array with one element', () => {
+    const result = analyzeArray([10]);
+    expect(result.average).toBe(10);
+    expect(result.min).toBe(10);
+    expect(result.max).toBe(10);
+    expect(result.length).toBe(1);
+  });
+
+  test('should handle an array with negative numbers', () => {
+    const result = analyzeArray([-1, -2, -3, -4, -5]);
+    expect(result.average).toBe(-3);
+    expect(result.min).toBe(-5);
+    expect(result.max).toBe(-1);
+    expect(result.length).toBe(5);
+  });
+
+  test('should handle an array with zeros', () => {
+    const result = analyzeArray([0, 0, 0, 0, 0]);
+    expect(result.average).toBe(0);
+    expect(result.min).toBe(0);
+    expect(result.max).toBe(0);
+    expect(result.length).toBe(5);
+  });
+
+  test('should return NaN for an empty array', () => {
+    const result = analyzeArray([]);
+    expect(result.average).toBeNaN();
+    expect(result.min).toBeNaN();
+    expect(result.max).toBeNaN();
+    expect(result.length).toBe(0);
   });
 });
