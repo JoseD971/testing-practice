@@ -1,6 +1,7 @@
 const { capitalize } = require('./capitalize.js');
 const { reverseString } = require('./reverseString.js');
 const { calculator } = require('./calculator.js');
+const { caesarCipher } = require('./caesarCipher.js');
 
 // Test for the capitalize function
 describe('capitalize', () => {
@@ -96,5 +97,40 @@ describe('divide', () => {
     expect(() => {
       calculator.divide(6, 0);
     }).toThrow('Cannot divide by zero');
+  });
+});
+
+//Tests for the caesarCipher function
+describe('caesarCipher', () => {
+  test('should shift characters correctly with a positive shift', () => {
+    expect(caesarCipher('abc', 3)).toBe('def');
+  });
+
+  test('should wrap around from z to a', () => {
+    expect(caesarCipher('xyz', 3)).toBe('abc');
+  });
+
+  test('should preserve letter case', () => {
+    expect(caesarCipher('HeLLo', 3)).toBe('KhOOr');
+  });
+
+  test('should leave non-alphabetic characters unchanged', () => {
+    expect(caesarCipher('Hello, World!', 3)).toBe('Khoor, Zruog!');
+  });
+
+  test('should handle negative shift correctly', () => {
+    expect(caesarCipher('abc', -3)).toBe('xyz');
+  });
+
+  test('should handle a shift of 0 (no change)', () => {
+    expect(caesarCipher('Hello, World!', 0)).toBe('Hello, World!');
+  });
+
+  test('should correctly wrap around uppercase letters', () => {
+    expect(caesarCipher('XYZ', 3)).toBe('ABC');
+  });
+
+  test('should correctly wrap around negative shift for uppercase letters', () => {
+    expect(caesarCipher('ABC', -3)).toBe('XYZ');
   });
 });
